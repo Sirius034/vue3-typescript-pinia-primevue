@@ -222,7 +222,7 @@ function parserTags (value: Entry['tags']): string
 function parserTags (value: string | Entry['tags']): Entry['tags'] | string {
   if (typeof value === 'string') {
     return getNativeString(value, regex).length
-      ? value.split(';').filter(text => !!text).map(text => ({ text }))
+      ? value.split(separator).filter(text => !!text).map(text => ({ text }))
       : []
   } else {
     return value.reduce((str, item, index) => {
