@@ -23,7 +23,6 @@
         {{ $t('entries.prompt') }}
       </pr-message>
 
-      <!-- это для того что бы убрать предупреждение от Google c полями password без Form -->
       <form
         id="form"
         method="GET"
@@ -284,6 +283,9 @@ const resolver = (event: Event, index: number) => {
 
   let isValid = true
   let errorData: ErrorData = {}
+  const checkValue = field === 'tags'
+    ? getNativeString(value, regex)
+    : value
 
   if (errorRows.has(item.id)) {
     const currentErrorData = errorRows.get(item.id)
@@ -302,11 +304,11 @@ const resolver = (event: Event, index: number) => {
       if (!isValid) break
 
       if (checkList[key].max) {
-        isValid = isValid && value.length <= checkList[key].max
+        isValid = isValid && checkValue.length <= checkList[key].max
       } else if (checkList[key].min) {
-        isValid = isValid && value.length >= checkList[key].min
+        isValid = isValid && checkValue.length >= checkList[key].min
       } else if (checkList[key].required) {
-        isValid = isValid && !!value
+        isValid = isValid && !!checkValue
       }
 
       if (!isValid && checkList[key].errorMessage) {
